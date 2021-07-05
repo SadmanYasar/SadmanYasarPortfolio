@@ -6,7 +6,29 @@
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js"></script>
 <script>THREEx.ArToolkitContext.baseURL = 'https://jeromeetienne.github.io/AR.js/three.js/'</script>
 
-<body style='margin : 0px; overflow: hidden; font-family: Monospace;'><script type="module">
+<style>
+	html,body {
+            margin: 0;
+            height: 100%;
+        }
+        
+        
+        	div{
+				width: 100%;
+                height: 100%;
+                display: block;
+            }
+</style>
+
+
+
+
+<body style='overflow: hidden; font-family: Monospace;'>
+	<div id="container"></div>
+
+
+
+<script type="module">
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
@@ -16,12 +38,31 @@
 		antialias: true,
 		alpha: true
 	});
+
+	window.addEventListener( 'resize', onWindowResize, false );
+
+         function onWindowResize() {
+
+         camera.aspect = contenedor.clientWidth / contenedor.clientHeight;
+
+         camera.updateProjectionMatrix();
+
+         renderer.setSize(contenedor.clientWidth, contenedor.clientHeight);
+         }  
+
+
+
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.domElement.style.position = 'absolute'
+	renderer.setPixelRatio( window.devicePixelRatio );
+	/* renderer.domElement.style.position = 'absolute'
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
-	document.body.appendChild( renderer.domElement );
+	document.body.appendChild( renderer.domElement ); */
+
+	let contenedor = document.getElementById('container');
+
+    contenedor.appendChild(renderer.domElement); 
 
 	// array of functions for the rendering loop
 	var onRenderFcts= [];
@@ -60,7 +101,7 @@
 	})
 
 	// handle resize
-	window.addEventListener('resize', function(){
+	/* window.addEventListener('resize', function(){
 		onResize()
 	})
 	function onResize(){
@@ -69,7 +110,7 @@
 		if( arToolkitContext.arController !== null ){
 			arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
 		}
-	}
+	} */
 	////////////////////////////////////////////////////////////////////////////////
 	//          initialize arToolkitContext
 	////////////////////////////////////////////////////////////////////////////////
