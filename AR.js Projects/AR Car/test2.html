@@ -104,7 +104,9 @@
 	// init controls for camera
 	var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
 		type : 'pattern',
-		patternUrl : 'https://obscure-tundra-18264.herokuapp.com/https://sadmanyasar17.github.io/AR.js%20Projects/AR%20Car/default-marker.png',
+		patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
+		//for heroku
+		// https://obscure-tundra-18264.herokuapp.com/
 		// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
 		// as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
 		changeMatrixMode: 'cameraTransformMatrix'
