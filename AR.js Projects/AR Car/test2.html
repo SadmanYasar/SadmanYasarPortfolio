@@ -55,10 +55,10 @@
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.domElement.style.position = 'absolute'
-	renderer.domElement.style.top = '0px'
-	renderer.domElement.style.left = '0px'
-	renderer.domElement.style.width = '100%'
-	renderer.domElement.style.height = '100%'
+	renderer.domElement.style.top = '0px';
+	renderer.domElement.style.left = '0px';
+	renderer.domElement.style.width = '100%';
+	renderer.domElement.style.height = '100%';
 	document.body.appendChild( renderer.domElement );
 
 	//let contenedor = document.getElementById('container');
@@ -107,8 +107,6 @@
 	})
 	function onResize(){
 		camera.aspect = renderer.domElement.clientWidth / renderer.domElement.clientHeight;
-
-        camera.updateProjectionMatrix();
 
         renderer.setSize(renderer.domElement.clientWidth, renderer.domElement.clientHeight);
 		arToolkitSource.onResizeElement()
