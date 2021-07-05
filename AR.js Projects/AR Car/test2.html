@@ -24,7 +24,6 @@
 
 
 <body style='overflow: hidden; font-family: Monospace;'>
-	<div id="container"></div>
 
 
 
@@ -55,14 +54,16 @@
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setPixelRatio( window.devicePixelRatio );
-	/* renderer.domElement.style.position = 'absolute'
+	renderer.domElement.style.position = 'absolute'
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
-	document.body.appendChild( renderer.domElement ); */
+	renderer.domElement.style.width = '100%'
+	renderer.domElement.style.height = '100%'
+	document.body.appendChild( renderer.domElement );
 
-	let contenedor = document.getElementById('container');
+	//let contenedor = document.getElementById('container');
 
-    contenedor.appendChild(renderer.domElement); 
+    //contenedor.appendChild(renderer.domElement); 
 
 	// array of functions for the rendering loop
 	var onRenderFcts= [];
@@ -106,7 +107,7 @@
 	})
 	function onResize(){
 		arToolkitSource.onResizeElement()
-		arToolkitSource.copyElementSizeTo(contenedor) //was previously renderer.domelement
+		arToolkitSource.copyElementSizeTo(renderer.domElement) //was previously contendor
 		if( arToolkitContext.arController !== null ){
 			arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
 		}
