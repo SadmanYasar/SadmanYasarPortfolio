@@ -3,8 +3,7 @@
 <!-- three.js library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script>
 <!-- ar.js -->
-<!-- <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js"></script> -->
-<script src="three.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js"></script>
 <script>THREEx.ArToolkitContext.baseURL = 'https://jeromeetienne.github.io/AR.js/three.js/'</script>
 
 <style>
@@ -15,6 +14,9 @@
         
         
         	div{
+				position: absolute;
+				top: 0px;
+				left: 0px;
 				width: 100%;
                 height: 100%;
                 display: block;
@@ -40,7 +42,7 @@
 		alpha: true
 	});
 
-	window.addEventListener( 'resize', onWindowResize, false );
+	/* window.addEventListener( 'resize', onWindowResize, false );
 
          function onWindowResize() {
 
@@ -50,7 +52,7 @@
 
          renderer.setSize(contenedor.clientWidth, contenedor.clientHeight);
          }  
-
+ */
 
 
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
@@ -102,16 +104,16 @@
 	})
 
 	// handle resize
-	/* window.addEventListener('resize', function(){
+	window.addEventListener('resize', function(){
 		onResize()
 	})
 	function onResize(){
 		arToolkitSource.onResizeElement()
-		arToolkitSource.copyElementSizeTo(renderer.domElement)
+		arToolkitSource.copyElementSizeTo(contenedor) //was previously renderer.domelement
 		if( arToolkitContext.arController !== null ){
 			arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
 		}
-	} */
+	}
 	////////////////////////////////////////////////////////////////////////////////
 	//          initialize arToolkitContext
 	////////////////////////////////////////////////////////////////////////////////
