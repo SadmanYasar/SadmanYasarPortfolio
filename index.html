@@ -109,7 +109,7 @@
         function onMouseMove( event ) {
         mouse.x = ( event.clientX - windowHalf.x );
         mouse.y = ( event.clientY - windowHalf.x );
-        //event.preventDefault();
+        event.preventDefault();
         }
 
         document.addEventListener( 'touchmove', onMouseMove, false );
