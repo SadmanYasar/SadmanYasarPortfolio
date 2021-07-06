@@ -109,7 +109,16 @@
         function onMouseMove( event ) {
         mouse.x = ( event.clientX - windowHalf.x );
         mouse.y = ( event.clientY - windowHalf.x );
+        }
 
+        window.addEventListener("devicemotion", handleMotion, true);
+        function handleMotionEvent(event) {
+
+        var x = event.accelerationIncludingGravity.x;
+        var y = event.accelerationIncludingGravity.y;
+
+        mouse.x = (x - windowHalf.x);
+        mouse.y = (y - windowHalf.x);
         }
         
         //responsiveness
