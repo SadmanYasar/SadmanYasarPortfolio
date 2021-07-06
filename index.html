@@ -99,8 +99,7 @@
     })
 
     
-    /* var maxX = window.clientWidth  - ball.clientWidth;
-    var maxY = garden.clientHeight - ball.clientHeight; */
+   
     function init() {
         //scene
         scene = new THREE.Scene();
@@ -110,35 +109,11 @@
         function onMouseMove( event ) {
         mouse.x = ( event.clientX - windowHalf.x );
         mouse.y = ( event.clientY - windowHalf.x );
+        //event.preventDefault();
         }
 
-        window.addEventListener("deviceorientation", handleOrientation, true);
-        function handleOrientation(event) {
-        var absolute = event.absolute;
-        var x = event.beta;
-        var y = event.gamma;
+        document.addEventListener( 'touchmove', onMouseMove, false );
 
-        // We constrain the x value to the range [-90,90]
-        if (x >  90) { x =  90};
-        if (x < -90) { x = -90};
-
-        // To make computation easier we shift the range of
-        // x and y to [0,180]
-        x += 90;
-        y += 90;
-
-        target.x = ( 180 - mouse.x ) * 0.001;
-        target.y = ( 180 - mouse.y ) * 0.001;
-  
-        camera.rotation.x += 0.03 * ( target.y - camera.rotation.x );
-        camera.rotation.y += 0.03 * ( target.x - camera.rotation.y );
-
-
-
-
-
-      }
-        
         //responsiveness
         window.addEventListener( 'resize', onWindowResize, false );
         function onWindowResize() {
