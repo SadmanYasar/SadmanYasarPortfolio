@@ -84,7 +84,7 @@
     import * as THREE from "./three/build/three.module.js";
     import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
     
-    let renderer, camera, scene, mesh, star, stargeometry, material, loader, stars,obj,x,y;
+    let renderer, camera, scene, mesh, star, stargeometry, material, loader, stars,obj;
     let vertices = [];
     let r, color, intensity, light  ;
     let mouse, target, windowHalf;
@@ -99,7 +99,8 @@
     })
 
     
-
+    /* var maxX = window.clientWidth  - ball.clientWidth;
+    var maxY = garden.clientHeight - ball.clientHeight; */
     function init() {
         //scene
         scene = new THREE.Scene();
@@ -111,15 +112,32 @@
         mouse.y = ( event.clientY - windowHalf.x );
         }
 
-        window.addEventListener("devicemotion", handleMotion, true);
-        function handleMotion(event) {
+        window.addEventListener("deviceorientation", handleOrientation, true);
+        function handleOrientation(event) {
+        var absolute = event.absolute;
+        var x = event.beta;
+        var y = event.gamma;
 
-        x = event.accelerationIncludingGravity.x;
-        y = event.accelerationIncludingGravity.y;
+        // We constrain the x value to the range [-90,90]
+        if (x >  90) { x =  90};
+        if (x < -90) { x = -90};
 
-        mouse.x = (x - windowHalf.x);
-        mouse.y = (y - windowHalf.x);
-        }
+        // To make computation easier we shift the range of
+        // x and y to [0,180]
+        x += 90;
+        y += 90;
+
+        target.x = ( 180 - mouse.x ) * 0.001;
+        target.y = ( 180 - mouse.y ) * 0.001;
+  
+        camera.rotation.x += 0.03 * ( target.y - camera.rotation.x );
+        camera.rotation.y += 0.03 * ( target.x - camera.rotation.y );
+
+
+
+
+
+      }
         
         //responsiveness
         window.addEventListener( 'resize', onWindowResize, false );
