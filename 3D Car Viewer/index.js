@@ -139,6 +139,7 @@ pmremGenerator.compileEquirectangularShader();
 
 
 $(".rightbutton").click(function(){
+  $(".rightbutton").css("pointer-events", "none");
     clickcounter++;
     if (clickcounter > 5) {
       clickcounter = 5;
