@@ -124,7 +124,8 @@ html
   color:#fff;
   font-family: 'Permanent Marker', cursive;
   top: 50%;
-  left: 80%;
-  transform: translate(-50%,-80%);
+  left: 75%;
+  transform: translate(-50%,-75%);
   display: none;
+  user-select: none;
 }
