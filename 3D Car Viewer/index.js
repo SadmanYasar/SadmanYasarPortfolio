@@ -14,8 +14,6 @@ let scene, path, clickcounter, envMap, loader, camera, controls, renderer
 
 let modelToRemove;
 
-
-
 // Scene
 scene = new THREE.Scene()
 //scene.add(new THREE.AxesHelper(5000));
@@ -56,6 +54,8 @@ function init() {
               $(".leftbutton").css("pointer-events", "auto");
               $(".rightbutton").css("pointer-events", "auto");
               gltf.scene.traverse( function ( child ) {
+              
+              $(".waittext").fadeOut();
 
               if ( child.isMesh ) {
                 //child.geometry.center(); // center here
@@ -78,7 +78,7 @@ function init() {
                   function ( xhr ) {
                     $(".leftbutton").css("pointer-events", "none");
                     $(".rightbutton").css("pointer-events", "none");
-                    
+                    $(".waittext").fadeIn();
 
                   }
                   )
@@ -150,7 +150,8 @@ $(".rightbutton").click(function(){
             loader.load( 'scene2.glb', function ( gltf ) {
               $(".leftbutton").css("pointer-events", "auto");
               $(".rightbutton").css("pointer-events", "auto");
-             
+              $(".waittext").fadeOut();
+
             gltf.scene.traverse( function ( child ) {
 
               if ( child.isMesh ) {
@@ -172,7 +173,7 @@ $(".rightbutton").click(function(){
                   function ( xhr ) {
                     $(".leftbutton").css("pointer-events", "none");
                     $(".rightbutton").css("pointer-events", "none");
-                    
+                    $(".waittext").fadeIn();
 
                   }
                   );
@@ -192,6 +193,8 @@ $(".leftbutton").click(function(){
             loader.load( 'scene2.glb', function ( gltf ) {
             $(".leftbutton").css("pointer-events", "auto");
             $(".rightbutton").css("pointer-events", "auto");
+            $(".waittext").fadeOut();
+
             gltf.scene.traverse( function ( child ) {
 
               if ( child.isMesh ) {
@@ -214,7 +217,7 @@ $(".leftbutton").click(function(){
                   function ( xhr ) {
                     $(".leftbutton").css("pointer-events", "none");
                     $(".rightbutton").css("pointer-events", "none");
-                    
+                    $(".waittext").fadeIn();
                   },
                   );
   }

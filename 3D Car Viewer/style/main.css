@@ -109,7 +109,7 @@ html
   float: right;
 }
 
-.arrows {
+.arrows, .waittext {
     user-select: none;
     position: absolute;
     z-index: 109;
@@ -119,4 +119,12 @@ html
   
 } 
 
-
+.waittext {
+  font-size: 50px;
+  color:#fff;
+  font-family: 'Permanent Marker', cursive;
+  top: 50%;
+  left: 80%;
+  transform: translate(-50%,-80%);
+  display: none;
+}
