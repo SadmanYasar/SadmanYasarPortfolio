@@ -3,14 +3,14 @@
 import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from './three/examples/jsm/loaders/RGBELoader.js';
-import { RoughnessMipmapper } from './three/examples/jsm/utils/RoughnessMipmapper.js';
+
 
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
 
-let scene, path, clickcounter, envMap, roughnessMipmapper, loader, camera, controls, renderer
+let scene, path, clickcounter, envMap, loader, camera, controls, renderer
 
 let modelToRemove;
 
@@ -27,10 +27,10 @@ $(window).on("load", function() {
 
 path = ['Model/lambo/',
         'Model/ferrari/', 
-        'Model/nissan1/', 
+        'Model/nissan2/', 
         'Model/porsche2/',
-        'Model/nissan3/',
-        'Model/nissan2/']
+        'Model/nissan1/',
+        'Model/nissan3/']
 clickcounter = 0;
 
 
@@ -52,15 +52,13 @@ function init() {
 
 						// model
             loader = new GLTFLoader().setPath( path[clickcounter] );
-            loader.load( 'scene2.gltf', function ( gltf ) {
-
-            gltf.scene.traverse( function ( child ) {
+            loader.load( 'scene2.glb', function ( gltf ) {
+              $(".leftbutton").css("pointer-events", "auto");
+              $(".rightbutton").css("pointer-events", "auto");
+              gltf.scene.traverse( function ( child ) {
 
               if ( child.isMesh ) {
                 //child.geometry.center(); // center here
-                            
-                roughnessMipmapper.generateMipmaps( child.material );
-
               }
 
               } );
@@ -71,89 +69,93 @@ function init() {
                   scene.add( gltf.scene );
 
                   modelToRemove = gltf.scene;
-                  } );
-						// use of RoughnessMipmapper is optional
-						 roughnessMipmapper = new RoughnessMipmapper( renderer );
-
-						
+                  },
 
 
 
-							roughnessMipmapper.dispose();
+
+                  // called while loading is progressing
+                  function ( xhr ) {
+                    $(".leftbutton").css("pointer-events", "none");
+                    $(".rightbutton").css("pointer-events", "none");
+                    
+
+                  }
+                  )
 
 							tick();
 
 						} );
 
+  /**
+   * Camera
+   */
+  // Base camera
 
+  camera = new THREE.PerspectiveCamera(
+    90,
+    sizes.width / sizes.height,
+    0.1,
+    100
+  )
 
-/**
- * Camera
- */
-// Base camera
+  scene.add(camera)
 
- camera = new THREE.PerspectiveCamera(
-  90,
-  sizes.width / sizes.height,
-  0.1,
-  100
-)
-
-scene.add(camera)
-
-// Controls
- controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
-//controls.autoRotate = true
-// controls.enableZoom = false
-controls.enablePan = false
-controls.dampingFactor = 0.05
-controls.maxDistance = 25
-controls.minDistance = 15
-controls.touches = {
-  ONE: THREE.TOUCH.ROTATE,
-  TWO: THREE.TOUCH.DOLLY_PAN,
-}
-controls.minPolarAngle = Math.PI/3;
-controls.maxPolarAngle = Math.PI/3;
+  // Controls
+  controls = new OrbitControls(camera, canvas)
+  controls.enableDamping = true
+  //controls.autoRotate = true
+  // controls.enableZoom = false
+  controls.enablePan = false
+  controls.dampingFactor = 0.05
+  controls.maxDistance = 25
+  controls.minDistance = 15
+  controls.touches = {
+    ONE: THREE.TOUCH.ROTATE,
+    TWO: THREE.TOUCH.DOLLY_PAN,
+  }
+  controls.minPolarAngle = Math.PI/3;
+  controls.maxPolarAngle = Math.PI/3;
 
 
 
-/**
- * Renderer
- */
- renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-  antialias: true,
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.toneMapping = THREE.ACESFilmicToneMapping
-renderer.toneMappingExposure = 1
-renderer.outputEncoding = THREE.sRGBEncoding
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  /**
+   * Renderer
+   */
+  renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+  })
+  renderer.setSize(sizes.width, sizes.height)
+  renderer.toneMapping = THREE.ACESFilmicToneMapping
+  renderer.toneMappingExposure = 1
+  renderer.outputEncoding = THREE.sRGBEncoding
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-const pmremGenerator = new THREE.PMREMGenerator( renderer );
-pmremGenerator.compileEquirectangularShader();
+  const pmremGenerator = new THREE.PMREMGenerator( renderer );
+  pmremGenerator.compileEquirectangularShader();
 
 }
+//end of init()
 
 
 $(".rightbutton").click(function(){
-  $(".rightbutton").css("pointer-events", "none");
+  
     clickcounter++;
     if (clickcounter > 5) {
       clickcounter = 5;
     } else {
       scene.remove(modelToRemove);
       loader = new GLTFLoader().setPath( path[clickcounter] );
-            loader.load( 'scene2.gltf', function ( gltf ) {
-
+            loader.load( 'scene2.glb', function ( gltf ) {
+              $(".leftbutton").css("pointer-events", "auto");
+              $(".rightbutton").css("pointer-events", "auto");
+             
             gltf.scene.traverse( function ( child ) {
 
               if ( child.isMesh ) {
                 //child.geometry.center(); // center here
                             
-                roughnessMipmapper.generateMipmaps( child.material );
 
               }
 
@@ -165,9 +167,17 @@ $(".rightbutton").click(function(){
                   scene.add( gltf.scene );
 
                   modelToRemove = gltf.scene;
-                  } );
+                  },
+                  // called while loading is progressing
+                  function ( xhr ) {
+                    $(".leftbutton").css("pointer-events", "none");
+                    $(".rightbutton").css("pointer-events", "none");
+                    
+
+                  }
+                  );
                 
-                
+                  $(".rightbutton").css("pointer-events", "auto");          
     }
   
 })
@@ -179,14 +189,15 @@ $(".leftbutton").click(function(){
   } else {
     scene.remove(modelToRemove);
     loader = new GLTFLoader().setPath( path[clickcounter] );
-            loader.load( 'scene2.gltf', function ( gltf ) {
-
+            loader.load( 'scene2.glb', function ( gltf ) {
+            $(".leftbutton").css("pointer-events", "auto");
+            $(".rightbutton").css("pointer-events", "auto");
             gltf.scene.traverse( function ( child ) {
 
               if ( child.isMesh ) {
                 //child.geometry.center(); // center here
                             
-                roughnessMipmapper.generateMipmaps( child.material );
+                
 
               }
 
@@ -198,7 +209,14 @@ $(".leftbutton").click(function(){
                   scene.add( gltf.scene );
 
                   modelToRemove = gltf.scene;
-                  } );
+                  },
+                  // called while loading is progressing
+                  function ( xhr ) {
+                    $(".leftbutton").css("pointer-events", "none");
+                    $(".rightbutton").css("pointer-events", "none");
+                    
+                  },
+                  );
   }
   
 
