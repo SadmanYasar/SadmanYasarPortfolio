@@ -120,12 +120,12 @@ html
 } 
 
 .waittext {
-  font-size: 50px;
+  font-size: 30px;
   color:#fff;
   font-family: 'Permanent Marker', cursive;
   top: 50%;
-  left: 75%;
-  transform: translate(-50%,-75%);
+  left: 70%;
+  transform: translate(-50%,-70%);
   display: none;
   user-select: none;
 }
