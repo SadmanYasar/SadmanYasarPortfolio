@@ -51,9 +51,9 @@ function init() {
 						// model
             loader = new GLTFLoader().setPath( path[clickcounter] );
             loader.load( 'scene2.glb', function ( gltf ) {
-              /* $(".leftbutton").css("pointer-events", "auto");
-              $(".rightbutton").css("pointer-events", "auto"); */
-              $(".arrows").show();
+              $(".leftbutton").css("pointer-events", "auto");
+              $(".rightbutton").css("pointer-events", "auto");
+              $(".arrows").fadeIn();
               $(".waittext").fadeOut();
 
               gltf.scene.traverse( function ( child ) {
@@ -77,9 +77,9 @@ function init() {
 
                   // called while loading is progressing
                   function ( xhr ) {
-                    /* $(".leftbutton").css("pointer-events", "none");
-                    $(".rightbutton").css("pointer-events", "none"); */
-                    $(".arrows").hide();
+                    $(".leftbutton").css("pointer-events", "none");
+                    $(".rightbutton").css("pointer-events", "none");
+                    $(".arrows").fadeOut();
                     $(".waittext").fadeIn();
 
                   }
@@ -150,10 +150,10 @@ $(".rightbutton").click(function(){
       scene.remove(modelToRemove);
       loader = new GLTFLoader().setPath( path[clickcounter] );
             loader.load( 'scene2.glb', function ( gltf ) {
-              /* $(".leftbutton").css("pointer-events", "auto");
+              $(".leftbutton").css("pointer-events", "auto");
               $(".rightbutton").css("pointer-events", "auto");
-              $(".arrows").fadeIn(); */
-              $(".arrows").show();
+              $(".arrows").fadeIn();
+              
               $(".waittext").fadeOut();
 
             gltf.scene.traverse( function ( child ) {
@@ -175,10 +175,10 @@ $(".rightbutton").click(function(){
                   },
                   // called while loading is progressing
                   function ( xhr ) {
-                    /* $(".leftbutton").css("pointer-events", "none");
+                    $(".leftbutton").css("pointer-events", "none");
                     $(".rightbutton").css("pointer-events", "none");
-                    $(".arrows").fadeOut(); */
-                    $(".arrows").hide();
+                    $(".arrows").fadeOut();
+                    
                     $(".waittext").fadeIn();
 
                   }
@@ -196,10 +196,10 @@ $(".leftbutton").click(function(){
     scene.remove(modelToRemove);
     loader = new GLTFLoader().setPath( path[clickcounter] );
             loader.load( 'scene2.glb', function ( gltf ) {
-           /*  $(".leftbutton").css("pointer-events", "auto");
+            $(".leftbutton").css("pointer-events", "auto");
             $(".rightbutton").css("pointer-events", "auto");
-            $(".arrows").fadeIn(); */
-            $(".arrows").show();
+            $(".arrows").fadeIn();
+           
             $(".waittext").fadeOut();
 
             gltf.scene.traverse( function ( child ) {
@@ -222,10 +222,10 @@ $(".leftbutton").click(function(){
                   },
                   // called while loading is progressing
                   function ( xhr ) {
-                    /* $(".leftbutton").css("pointer-events", "none");
+                    $(".leftbutton").css("pointer-events", "none");
                     $(".rightbutton").css("pointer-events", "none");
-                    $(".arrows").fadeOut(); */
-                    $(".arrows").hide();
+                    $(".arrows").fadeOut();
+                   
                     $(".waittext").fadeIn();
                   },
                   );
