@@ -129,3 +129,8 @@ html
   display: none;
   user-select: none;
 }
+
+.arrows {
+  display: none;
+
+}
