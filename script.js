@@ -126,7 +126,7 @@ import * as THREE from "./three/build/three.module.js";
         camera.rotation.x += 0.03 * ( target.y - camera.rotation.x );
         camera.rotation.y += 0.03 * ( target.x - camera.rotation.y );
 
-        //stars.rotation.z += 0.003;
+        stars.rotation.z += 0.003;
 
         renderer.render(scene,camera);
 
