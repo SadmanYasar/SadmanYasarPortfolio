@@ -53,6 +53,7 @@ function init() {
             loader.load( 'scene2.glb', function ( gltf ) {
               $(".leftbutton").css("pointer-events", "auto");
               $(".rightbutton").css("pointer-events", "auto");
+              $(".arrows").fadeIn();
               gltf.scene.traverse( function ( child ) {
               
               $(".waittext").fadeOut();
@@ -150,6 +151,7 @@ $(".rightbutton").click(function(){
             loader.load( 'scene2.glb', function ( gltf ) {
               $(".leftbutton").css("pointer-events", "auto");
               $(".rightbutton").css("pointer-events", "auto");
+              $(".arrows").fadeIn();
               $(".waittext").fadeOut();
 
             gltf.scene.traverse( function ( child ) {
@@ -173,12 +175,12 @@ $(".rightbutton").click(function(){
                   function ( xhr ) {
                     $(".leftbutton").css("pointer-events", "none");
                     $(".rightbutton").css("pointer-events", "none");
+                    $(".arrows").fadeOut();
                     $(".waittext").fadeIn();
 
                   }
                   );
-                
-                  $(".rightbutton").css("pointer-events", "auto");          
+                       
     }
   
 })
@@ -193,6 +195,7 @@ $(".leftbutton").click(function(){
             loader.load( 'scene2.glb', function ( gltf ) {
             $(".leftbutton").css("pointer-events", "auto");
             $(".rightbutton").css("pointer-events", "auto");
+            $(".arrows").fadeIn();
             $(".waittext").fadeOut();
 
             gltf.scene.traverse( function ( child ) {
@@ -217,6 +220,7 @@ $(".leftbutton").click(function(){
                   function ( xhr ) {
                     $(".leftbutton").css("pointer-events", "none");
                     $(".rightbutton").css("pointer-events", "none");
+                    $(".arrows").fadeOut();
                     $(".waittext").fadeIn();
                   },
                   );
