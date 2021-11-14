@@ -1,281 +1,163 @@
-//import './style/main.css'
-//import * as THREE from './three/build/three.js'
-import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js'
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-relative-packages */
+
+import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from './three/examples/jsm/loaders/RGBELoader.js';
 
-
-
 // Canvas
-const canvas = document.querySelector('canvas.webgl')
+const canvas = document.querySelector('canvas.webgl');
 
-
-let scene, path, clickcounter, envMap, loader, camera, controls, renderer
-
-let modelToRemove;
+let envMap; let loader; let camera; let controls; let
+  renderer;
+let layerIndex = 0;
 
 // Scene
-scene = new THREE.Scene()
-//scene.add(new THREE.AxesHelper(5000));
+const scene = new THREE.Scene();
 
-//loadingAnimation
-$(window).on("load", function() {
-  $(".loader-wrapper").fadeOut("slow");
-})
+const path = ['Model/lambo/scene2.glb',
+  'Model/ferrari/scene2.glb',
+  'Model/nissan2/scene2.glb',
+  'Model/porsche2/scene2.glb',
+  'Model/nissan1/scene2.glb',
+  'Model/nissan3/scene2.glb'];
 
-path = ['Model/lambo/',
-        'Model/ferrari/', 
-        'Model/nissan2/', 
-        'Model/porsche2/',
-        'Model/nissan1/',
-        'Model/nissan3/']
-clickcounter = 0;
-
-
-function init() {
-  new RGBELoader()
-					.setDataType( THREE.UnsignedByteType )
-					.setPath( 'textures/' )
-					.load( 'autoshop_01_2k.hdr', function ( texture ) {
-
-						 envMap = pmremGenerator.fromEquirectangular( texture ).texture;
-
-						scene.background = envMap;
-						scene.environment = envMap;
-
-						texture.dispose();
-						pmremGenerator.dispose();
-
-						tick();
-
-						// model
-            loader = new GLTFLoader().setPath( path[clickcounter] );
-            loader.load( 'scene2.glb', function ( gltf ) {
-              $(".leftbutton").css("pointer-events", "auto");
-              $(".rightbutton").css("pointer-events", "auto");
-              $(".arrows").fadeIn();
-              $(".waittext").fadeOut();
-
-              gltf.scene.traverse( function ( child ) {
-              
-              if ( child.isMesh ) {
-                //child.geometry.center(); // center here
-              }
-
-              } );
-
-                  gltf.scene.scale.set(5,5,5) // scale here
-                  camera.position.set(gltf.scene.position.x, gltf.scene.position.y, gltf.scene.position.z + 20);
-                  
-                  scene.add( gltf.scene );
-
-                  modelToRemove = gltf.scene;
-                  },
-
-
-
-
-                  // called while loading is progressing
-                  function ( xhr ) {
-                    $(".leftbutton").css("pointer-events", "none");
-                    $(".rightbutton").css("pointer-events", "none");
-                    $(".arrows").fadeOut();
-                    $(".waittext").fadeIn();
-
-                  }
-                  )
-
-							tick();
-
-						} );
+const init = () => {
+  /**
+ * Sizes
+ */
+  const sizes = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  };
 
   /**
    * Camera
    */
-  // Base camera
-
   camera = new THREE.PerspectiveCamera(
     90,
     sizes.width / sizes.height,
     0.1,
-    100
-  )
+    100,
+  );
 
-  scene.add(camera)
+  camera.position.set(0, 0, 20);
 
-  // Controls
-  controls = new OrbitControls(camera, canvas)
-  controls.enableDamping = true
-  //controls.autoRotate = true
-  // controls.enableZoom = false
-  controls.enablePan = false
-  controls.dampingFactor = 0.05
-  controls.maxDistance = 25
-  controls.minDistance = 15
-  controls.touches = {
-    ONE: THREE.TOUCH.ROTATE,
-    TWO: THREE.TOUCH.DOLLY_PAN,
-  }
-  controls.minPolarAngle = Math.PI/3;
-  controls.maxPolarAngle = Math.PI/3;
+  camera.layers.set(layerIndex);
 
-
+  scene.add(camera);
 
   /**
    * Renderer
    */
   renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
+    canvas,
     antialias: true,
-  })
-  renderer.setSize(sizes.width, sizes.height)
-  renderer.toneMapping = THREE.ACESFilmicToneMapping
-  renderer.toneMappingExposure = 1
-  renderer.outputEncoding = THREE.sRGBEncoding
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  });
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  const pmremGenerator = new THREE.PMREMGenerator( renderer );
+  const pmremGenerator = new THREE.PMREMGenerator(renderer);
   pmremGenerator.compileEquirectangularShader();
 
-}
-//end of init()
+  new RGBELoader()
+    .setDataType(THREE.UnsignedByteType)
+    .setPath('textures/')
+    .load('autoshop_01_2k.hdr', (texture) => {
+      envMap = pmremGenerator.fromEquirectangular(texture).texture;
 
+      scene.background = envMap;
+      scene.environment = envMap;
 
-$(".rightbutton").click(function(){
-  
-    clickcounter++;
-    if (clickcounter > 5) {
-      clickcounter = 5;
-    } else {
-      scene.remove(modelToRemove);
-      loader = new GLTFLoader().setPath( path[clickcounter] );
-            loader.load( 'scene2.glb', function ( gltf ) {
-              $(".leftbutton").css("pointer-events", "auto");
-              $(".rightbutton").css("pointer-events", "auto");
-              $(".arrows").fadeIn();
-              
-              $(".waittext").fadeOut();
+      texture.dispose();
+      pmremGenerator.dispose();
 
-            gltf.scene.traverse( function ( child ) {
+      // model
+      loader = new GLTFLoader();
 
-              if ( child.isMesh ) {
-                //child.geometry.center(); // center here
-                            
+      const loadModel = (url, layer) => loader
+        .loadAsync(url)
+        .then((gltf) => {
+          gltf.scene.scale.set(5, 5, 5);
+          gltf.scene.traverse((object) => {
+            object.layers.set(layer);
+          });
 
-              }
+          scene.add(gltf.scene);
+        });
 
-              } );
+      loadModel(path[0], 0)
+        .then((result) => loadModel(path[1], 1))
+        .then((result) => loadModel(path[2], 2))
+        .then((result) => loadModel(path[3], 3))
+        .then((result) => loadModel(path[4], 4))
+        .then((result) => loadModel(path[5], 5))
+        .then((result) => $('.loader-wrapper').fadeOut('slow'))
+        .catch((error) => console.log(error));
+    });
 
-                  gltf.scene.scale.set(5,5,5) // scale here
-                  camera.position.set(gltf.scene.position.x, gltf.scene.position.y, gltf.scene.position.z + 20);
-                  
-                  scene.add( gltf.scene );
+  // Controls
+  controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.autoRotate = true;
+  controls.enablePan = false;
+  controls.dampingFactor = 0.05;
+  controls.maxDistance = 25;
+  controls.minDistance = 15;
+  controls.touches = {
+    ONE: THREE.TOUCH.ROTATE,
+    TWO: THREE.TOUCH.DOLLY_PAN,
+  };
+  controls.minPolarAngle = Math.PI / 3;
+  controls.maxPolarAngle = Math.PI / 3;
+};
 
-                  modelToRemove = gltf.scene;
-                  },
-                  // called while loading is progressing
-                  function ( xhr ) {
-                    $(".leftbutton").css("pointer-events", "none");
-                    $(".rightbutton").css("pointer-events", "none");
-                    $(".arrows").fadeOut();
-                    
-                    $(".waittext").fadeIn();
-
-                  }
-                  );
-                       
-    }
-  
-})
-
-$(".leftbutton").click(function(){
-  clickcounter--;
-  if (clickcounter < 0) {
-    clickcounter = 0;
+$('.rightbutton').click(() => {
+  layerIndex += 1;
+  if (layerIndex > 5) {
+    layerIndex = 5;
   } else {
-    scene.remove(modelToRemove);
-    loader = new GLTFLoader().setPath( path[clickcounter] );
-            loader.load( 'scene2.glb', function ( gltf ) {
-            $(".leftbutton").css("pointer-events", "auto");
-            $(".rightbutton").css("pointer-events", "auto");
-            $(".arrows").fadeIn();
-           
-            $(".waittext").fadeOut();
-
-            gltf.scene.traverse( function ( child ) {
-
-              if ( child.isMesh ) {
-                //child.geometry.center(); // center here
-                            
-                
-
-              }
-
-              } );
-
-                  gltf.scene.scale.set(5,5,5) // scale here
-                  camera.position.set(gltf.scene.position.x, gltf.scene.position.y, gltf.scene.position.z + 20);
-                  
-                  scene.add( gltf.scene );
-
-                  modelToRemove = gltf.scene;
-                  },
-                  // called while loading is progressing
-                  function ( xhr ) {
-                    $(".leftbutton").css("pointer-events", "none");
-                    $(".rightbutton").css("pointer-events", "none");
-                    $(".arrows").fadeOut();
-                   
-                    $(".waittext").fadeIn();
-                  },
-                  );
+    camera.layers.set(layerIndex);
   }
-  
+});
 
-})
-
-/**
- * Sizes
- */
- const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-}
+$('.leftbutton').click(() => {
+  layerIndex -= 1;
+  if (layerIndex < 0) {
+    layerIndex = 0;
+  } else {
+    camera.layers.set(layerIndex);
+  }
+});
 
 window.addEventListener('resize', () => {
   // Update sizes
-  sizes.width = window.innerWidth
-  sizes.height = window.innerHeight
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
 
   // Update camera
-  camera.aspect = sizes.width / sizes.height
-  camera.updateProjectionMatrix()
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
 
   // Update renderer
-  renderer.setSize(sizes.width, sizes.height)
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-})
-
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
 
 /**
  * Animate
  */
-const clock = new THREE.Clock()
 const tick = () => {
-  const elapsedTime = clock.getElapsedTime()
+  controls.update();
 
-  //mesh.rotation.y += 0.01 * Math.sin(1)
-  //mesh.rotation.y += 0.01 * Math.sin(1)
-  //object.rotation.z += 0.01 * Math.sin(1)
+  renderer.render(scene, camera);
 
-  // Update controls
-  controls.update()
-  // Render
-  renderer.render(scene, camera)
-
-  // Call tick again on the next frame
-  window.requestAnimationFrame(tick)
-}
+  window.requestAnimationFrame(tick);
+};
 init();
-tick()
+tick();
