@@ -24,15 +24,15 @@ const path = ['Model/lambo/scene2.glb',
   'Model/nissan1/scene2.glb',
   'Model/nissan3/scene2.glb'];
 
-const init = () => {
-  /**
- * Sizes
+/**
+  * Sizes
  */
-  const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  };
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
 
+const init = () => {
   /**
    * Camera
    */
