@@ -22,7 +22,7 @@ const path = ['Model/lambo/scene2.glb',
   'Model/nissan2/scene2.glb',
   'Model/porsche2/scene2.glb',
   'Model/nissan1/scene2.glb',
-  'Model/nissan3/scene2.glb'];
+];
 
 /**
   * Sizes
@@ -93,11 +93,10 @@ const init = () => {
 
       loadModel(path[0], 0)
         .then((result) => loadModel(path[1], 1))
+        .then((result) => $('.loader-wrapper').fadeOut('slow'))
         .then((result) => loadModel(path[2], 2))
         .then((result) => loadModel(path[3], 3))
         .then((result) => loadModel(path[4], 4))
-        .then((result) => loadModel(path[5], 5))
-        .then((result) => $('.loader-wrapper').fadeOut('slow'))
         .catch((error) => console.log(error));
     });
 
@@ -119,8 +118,8 @@ const init = () => {
 
 $('.rightbutton').click(() => {
   layerIndex += 1;
-  if (layerIndex > 5) {
-    layerIndex = 5;
+  if (layerIndex > 4) {
+    layerIndex = 4;
   } else {
     camera.layers.set(layerIndex);
   }
