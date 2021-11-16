@@ -92,8 +92,8 @@ const init = () => {
         });
 
       loadModel(path[0], 0)
-        .then((result) => loadModel(path[1], 1))
         .then((result) => $('.loader-wrapper').fadeOut('slow'))
+        .then((result) => loadModel(path[1], 1))
         .then((result) => loadModel(path[2], 2))
         .then((result) => loadModel(path[3], 3))
         .then((result) => loadModel(path[4], 4))
