@@ -10,15 +10,13 @@ import {
   TextureLoader,
   PointsMaterial,
   Points,
-  Event,
-  Object3D,
 } from 'three';
 
 let renderer: WebGLRenderer; 
 let camera: PerspectiveCamera; 
 let scene: Scene; 
-let stargeometry; 
-let stars: Points<BufferGeometry, PointsMaterial> | Object3D<Event>;
+let stargeometry: BufferGeometry; 
+let stars: Points;
 
 const vertices: Array<number> = [];
 const mouse = new Vector2();
@@ -44,20 +42,20 @@ const init = (): void|null => {
   }
 
   // camera controls
-  function onMouseMove(event: { clientX: number; clientY: number; }) {
+  const onMouseMove = (event: { clientX: number; clientY: number; }) => {
     mouse.x = (event.clientX - windowHalf.x);
     mouse.y = (event.clientY - windowHalf.x);
-  }
+  };
   document.addEventListener('mousemove', onMouseMove, false);
 
   // responsiveness
-  function onWindowResize() {
-    camera.aspect = contendor!.clientWidth / contendor!.clientHeight;
+  const onWindowResize = () => {
+    camera.aspect = contendor.clientWidth / contendor.clientHeight;
 
     camera.updateProjectionMatrix();
 
-    renderer.setSize(contendor!.clientWidth, contendor!.clientHeight);
-  }
+    renderer.setSize(contendor.clientWidth, contendor.clientHeight);
+  };
   window.addEventListener('resize', onWindowResize, false);
 
   // camera
