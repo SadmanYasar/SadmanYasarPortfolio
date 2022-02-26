@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const path = require('path');
 
 module.exports = {
-    entry: './index.ts',
+    entry: './src/index.ts',
     module: {
         rules: [
             {
@@ -15,11 +16,15 @@ module.exports = {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
             },
+            {
+                test: /\.png/,
+                type: 'asset/resource'
+            },
         ],
     },
     resolve: {
         alias: {
-            three: path.resolve('./node_modules/three')
+            three: path.resolve('./node_modules/three'),
         },
         extensions: ['.tsx', '.ts', '.js'],
     },
@@ -29,8 +34,13 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'index.html'
-        })
+            template: './src/index.html'
+        }),
+        new CopyPlugin({
+            patterns: [
+              { from: "projects", to: "projects" },
+            ],
+        }),
     ],
     devServer: {
         static: path.resolve(__dirname, 'build'),

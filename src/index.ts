@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   Vector2,
   Scene,
@@ -12,6 +11,9 @@ import {
   Points,
 } from 'three';
 
+import './styles/style.css';
+import star from './assets/star3.png';
+
 let renderer: WebGLRenderer; 
 let camera: PerspectiveCamera; 
 let scene: Scene; 
@@ -24,9 +26,7 @@ const target = new Vector2();
 const windowHalf = new Vector2(window.innerWidth / 2, window.innerHeight / 2);
 
 // loader
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 $(window).on('load', () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   $('.loader-wrapper').fadeOut('slow');
 });
 
@@ -84,7 +84,8 @@ const init = (): void|null => {
 
   stargeometry.setAttribute('position', new Float32BufferAttribute(vertices, 3));
 
-  const sprite = new TextureLoader().load('./assets/star3.png');
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const sprite = new TextureLoader().load(star);
   const starMaterial = new PointsMaterial({
     color: 0xaaaaaa,
     size: 4,
@@ -116,8 +117,6 @@ window.addEventListener('scroll', () => {
 });
 
 const animate = () => {
-  requestAnimationFrame(animate);
-
   target.x = (1 - mouse.x) * 0.001;
   target.y = (1 - mouse.y) * 0.001;
 
@@ -127,6 +126,8 @@ const animate = () => {
   stars.rotation.z += 0.003;
 
   renderer.render(scene, camera);
+
+  window.requestAnimationFrame(animate);
 };
 
 init();
