@@ -82,22 +82,21 @@ const starMaterial = new PointsMaterial({
 
 const stars = new Points(stargeometry, starMaterial);
 scene.add(stars);
-/* }; */
 
 let oldValue = 0;
 let newValue = 0;
 
 window.addEventListener('scroll', () => {
-// Get the new Value
-newValue = window.pageYOffset;
+  // Get the new Value
+  newValue = window.pageYOffset;
 
-// Subtract the two and conclude
-if (oldValue - newValue < 0) {
-  // downscroll
-  camera.position.z += 0.3;
-} else if (oldValue - newValue > 0) {
-  // upscroll
-  camera.position.z -= 0.3;
+  // Subtract the two and conclude
+  if (oldValue - newValue < 0) {
+    // downscroll
+    camera.position.z += 0.3;
+  } else if (oldValue - newValue > 0) {
+    // upscroll
+    camera.position.z -= 0.3;
 }
 
 // Update the old value
@@ -105,18 +104,17 @@ oldValue = newValue;
 });
 
 const animate = () => {
-target.x = (1 - mouse.x) * 0.001;
-target.y = (1 - mouse.y) * 0.001;
+  target.x = (1 - mouse.x) * 0.001;
+  target.y = (1 - mouse.y) * 0.001;
 
-camera.rotation.x += 0.03 * (target.y - camera.rotation.x);
-camera.rotation.y += 0.03 * (target.x - camera.rotation.y);
+  camera.rotation.x += 0.03 * (target.y - camera.rotation.x);
+  camera.rotation.y += 0.03 * (target.x - camera.rotation.y);
 
-stars.rotation.z += 0.003;
+  stars.rotation.z += 0.003;
 
-renderer.render(scene, camera);
+  renderer.render(scene, camera);
 
-window.requestAnimationFrame(animate);
+  window.requestAnimationFrame(animate);
 };
 
-/* init(); */
 animate();

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const path = require('path');
 
 module.exports = {
@@ -14,7 +16,7 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
             {
                 test: /\.png/,
@@ -41,6 +43,8 @@ module.exports = {
               { from: "projects", to: "projects" },
             ],
         }),
+        new MiniCssExtractPlugin(),
+        new CssMinimizerPlugin(),
     ],
     devServer: {
         static: path.resolve(__dirname, 'build'),
