@@ -104,12 +104,15 @@ div {
   display: block;
 }
 
+#container {
+  z-index: 1;
+}
+
 #intro {
   font-family: "Anton", sans-serif;
   position: absolute;
   color: white;
   text-align: center;
-  z-index: 1;
   user-select: none;
   height: 50px;
   top: 200px;
@@ -121,7 +124,6 @@ div {
   position: absolute;
   color: white;
   text-align: center;
-  z-index: 1;
   height: 50px;
   user-select: none;
   transition: transform 0.3s ease-out;
@@ -166,7 +168,7 @@ a {
 main {
   width: 100vw;
   color: white;
-  z-index: 3;
+  z-index: 1;
   position: absolute;
   margin: 0px auto;
   padding: 120px 0px;
@@ -186,44 +188,43 @@ canvas {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: -1;
 }
 
+header {
+  /* background: var(--dark-bg); */
+  grid-column: 2 / span 4;
+  font-size: 2.0rem;
+  padding: 2rem;
+  margin-bottom: var(--spacing);
+}
 
+section {
+  grid-column: 2 / 8;
+  padding: 1rem;
+  background: var(--dark-bg);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin-bottom: var(--spacing);
+}
 
-  header {
-    /* background: var(--dark-bg); */
-    grid-column: 2 / span 4;
-    font-size: 2.0rem;
-    padding: 2rem;
-    margin-bottom: var(--spacing);
-  }
+blockquote {
+  margin: 0;
+  padding: 0;
+  grid-column: 2 / span 9;
+  margin-bottom: var(--spacing);
+}
 
-  section {
-    grid-column: 2 / 8;
-    padding: 1rem;
-    background: var(--dark-bg);
-    font-size: 1.25rem;
-    line-height: 1.5;
-    margin-bottom: var(--spacing);
-  }
+blockquote p {
+  color: white;
+  font-size: 4rem;
+  display: inline;
+  line-height: 1;
+}
 
-  blockquote {
-    margin: 0;
-    padding: 0;
-    grid-column: 2 / span 9;
-    margin-bottom: var(--spacing);
-  }
-
-  blockquote p {
-    color: white;
-    font-size: 4rem;
-    display: inline;
-    line-height: 1;
-  }
-
-  .left {
-    grid-column: 6 / 12;
-  }
+.left {
+  grid-column: 6 / 12;
+}
 
 
 
