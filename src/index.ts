@@ -87,20 +87,17 @@ let oldValue = 0;
 let newValue = 0;
 
 window.addEventListener('scroll', () => {
-  // Get the new Value
   newValue = window.pageYOffset;
 
-  // Subtract the two and conclude
   if (oldValue - newValue < 0) {
     // downscroll
     camera.position.z += 0.3;
   } else if (oldValue - newValue > 0) {
     // upscroll
     camera.position.z -= 0.3;
-}
+  }
 
-// Update the old value
-oldValue = newValue;
+  oldValue = newValue;
 });
 
 const animate = () => {

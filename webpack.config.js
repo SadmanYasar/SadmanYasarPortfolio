@@ -15,6 +15,10 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
+                test: /\.html$/i,
+                loader: "html-loader",
+            },
+            {
                 test: /\.css$/i,
                 use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
@@ -41,7 +45,7 @@ module.exports = {
         }),
         new CopyPlugin({
             patterns: [
-              { from: "projects", to: "projects" },
+                { from: "projects", to: "projects" },
             ],
         }),
         new MiniCssExtractPlugin(),
@@ -51,6 +55,6 @@ module.exports = {
         static: path.resolve(__dirname, 'build'),
         compress: true,
         port: 3000,
-      },
+    },
     devtool: 'source-map',
 };
